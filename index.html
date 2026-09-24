@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vad tycker du om planerna vid Blomsterfonden?</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:0 auto;padding:24px;line-height:1.5;background:#f7f7f5;color:#222}
+main{background:white;padding:clamp(20px,5vw,42px);border-radius:16px}h1{line-height:1.15}fieldset{border:0;padding:0;margin:30px 0}legend{font-weight:700;font-size:1.08rem;margin-bottom:12px}
+label.option{display:block;padding:8px 0}textarea{width:100%;box-sizing:border-box;min-height:120px;padding:12px;font:inherit;border:1px solid #999;border-radius:8px}
+button{font:inherit;font-weight:700;padding:12px 20px;border:0;border-radius:8px;background:#222;color:white;cursor:pointer}
+.small{font-size:.9rem;color:#555}.hidden{display:none}#status{margin-top:16px;font-weight:600}
+</style></head><body><main>
+<h1>Vad tycker du om planerna vid Blomsterfonden?</h1>
+<p>Blomsterfonden planerar tillsammans med Stockholms stad för en ny byggnad vid Sylvestergatan. Den befintliga byggnaden ersätts med en större byggnad med cirka 85 lägenheter för seniorboende och/eller vård- och omsorgsboende. Syftet är bland annat att skapa moderna och tillgängliga bostäder och omsorgslokaler och ge fler äldre möjlighet att bo kvar i området.</p>
+<p>Den nya byggnaden blir större och högre än den befintliga. Den placeras huvudsakligen på samma plats som dagens byggnad och naturmarken väster om byggnaden ska till största delen bevaras. Förslaget innebär samtidigt att platsens skala förändras och att viss grönska påverkas.</p>
+<p>Vi vill veta vad du som bor i området tycker. Svaren används som underlag för boendeföreningens synpunkter på planerna.</p>
+<form id="survey">
+<fieldset><legend>1. Hur ser du övergripande på förslaget att bygga ett nytt och större senior- och vård- och omsorgsboende på platsen?</legend>
+<label class="option"><input type="radio" name="installning" value="Mycket positivt" required> Mycket positivt</label><label class="option"><input type="radio" name="installning" value="Ganska positivt" required> Ganska positivt</label><label class="option"><input type="radio" name="installning" value="Varken positivt eller negativt" required> Varken positivt eller negativt</label><label class="option"><input type="radio" name="installning" value="Ganska negativt" required> Ganska negativt</label><label class="option"><input type="radio" name="installning" value="Mycket negativt" required> Mycket negativt</label><label class="option"><input type="radio" name="installning" value="Vet inte/behöver mer information" required> Vet inte/behöver mer information</label>
+</fieldset>
+<fieldset><legend>2. Vad tycker du är positivt eller viktigt med förslaget?</legend><textarea name="positivt" placeholder="Skriv gärna med egna ord"></textarea></fieldset>
+<fieldset><legend>3. Finns det något i förslaget som du är orolig för eller tycker borde förändras?</legend><textarea name="oro" placeholder="Skriv gärna med egna ord"></textarea></fieldset>
+<fieldset><legend>4. Om boendeföreningen lämnar synpunkter på detaljplanen, vad tycker du framför allt att vi ska försöka påverka?</legend><textarea name="paverka" placeholder="Skriv gärna med egna ord"></textarea></fieldset>
+<button type="submit">Skicka svar</button><p id="status" aria-live="polite"></p>
+</form></main>
+<script>
+const ENDPOINT="PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+document.getElementById("survey").addEventListener("submit",async(e)=>{
+ e.preventDefault(); const s=document.getElementById("status");
+ if(ENDPOINT.startsWith("PASTE_")){s.textContent="Enkäten är ännu inte öppnad för svar.";return;}
+ s.textContent="Skickar…";
+ const f=new FormData(e.target); const body=new URLSearchParams(f);
+ try{await fetch(ENDPOINT,{method:"POST",mode:"no-cors",body});e.target.reset();s.textContent="Tack! Ditt svar är inskickat."}
+ catch(err){s.textContent="Det gick inte att skicka svaret. Försök igen."}
+});
+</script></body></html>
